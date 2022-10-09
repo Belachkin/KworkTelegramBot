@@ -361,5 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/KworkTelegramBot/config/whitelist.json
-/KworkTelegramBot/config/token.json
+
