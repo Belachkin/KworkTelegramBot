@@ -1,5 +1,5 @@
 # KworkTelegramBot
-### [RU](RuREADME.md) | [EN](EnREADME.md)
+### [RU](README.md) | [EN](EnREADME.md)
 ## Парсер новых проектов на бирже
 
 Раз в 15 минут бот просматривает биржу на сайте kwork на наличие новых проектов,
