@@ -1,45 +1,95 @@
 ﻿using System;
+using System.Threading;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
+using System.Timers;
+using Timer = System.Timers.Timer;
+using Newtonsoft.Json.Linq;
+using System.Reflection;
 
 namespace KworkTelegramBot 
 {
     class Program
     {
+        public static JsonWhiteListModel whiteList;
+        public static JsonTokenModel token;
+        public static Timer timer = new Timer((1000 * 60) * 15);
+        public static KworkJsonModel json;
+        public static List<DbModel> resultModel;
+        
         static void Main(string[] args)
         {
-            var client = new TelegramBotClient("");
+                        
+            json = KworkParsing.GetKworkProjectsJson("https://kwork.ru/projects");
+            GetJson.SaveJson("json1.json", json);
+            GetJson.SaveJson("json2.json", json);
 
-            client.StartReceiving(Update, Error);
+            timer.Elapsed += Timer_Elapsed2;
+            timer.Enabled = true;
+            timer.AutoReset = true;
+            timer.Start();
 
+            Console.WriteLine("Таймер запущен");
 
             Console.ReadLine();
         }
 
-        private async static Task Update(ITelegramBotClient botClient, Update update, CancellationToken token)
+        private static async void Timer_Elapsed2(object? sender, ElapsedEventArgs e)
         {
-            var message = update.Message;
-            if (message.Text != null)
+            DateTime now = DateTime.Now;           
+            Console.WriteLine($"Ивент сработал | T: {now:T}");
+
+
+            token = GetJson.GetToken();
+            whiteList = GetJson.GetWhiteList();
+
+            var client = new TelegramBotClient(token.token.ToString());
+
+            json = KworkParsing.GetKworkProjectsJson("https://kwork.ru/projects");
+            var json2 = GetJson.GetJsonModel("json2.json");
+
+            resultModel = new List<DbModel>();
+
+            foreach(var model in json2.data.wants)
             {
-                Console.WriteLine($"{message.Chat.Id} | {message.Text}");
-                if (message.Text.ToLower().Contains("здорова"))
+                resultModel.Add(new DbModel(
+                    model.id,
+                    model.name,
+                    model.description,
+                    model.url,
+                    model.priceLimit,
+                    model.possiblePriceLimit,
+                    model.timeLeft,
+                    model.kworkCount                          
+                    ));
+            }
+
+            foreach (var model1 in json.data.wants)
+            {
+                foreach (var model2 in resultModel)
                 {
-                  await botClient.SendTextMessageAsync(message.Chat.Id, "Здоровей видали!");
-                  return;
-                }   
+                    if(model1.id == model2.IdProject)
+                    {
+                        model2.isMatch = true;
+                    }
+                }
             }
-            if(message.Photo != null)
+
+            foreach(var model in resultModel)
             {
-                Console.WriteLine($"{message.Chat.Id} | Send Photo");
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Круто, но отправь фотку документом пожалуйста");
-                return;
+                if(model.isMatch != true)
+                {
+                    Console.WriteLine($"Бот отправил новый пост: id {model.IdProject} | {model.Name}");
+                    await client.SendTextMessageAsync(whiteList.chatId[0],
+                        $"**{model.Name}**\n{model.Description}\n https://kwork.ru/{model.Url}/view \nЖелаемый бюджет: до **{model.priceLimit}₽**\nДопустимый: до **{model.possiblePrice}₽**"
+                        );
+                }        
             }
-            if (message.Photo != null)
-            {
-                
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Ща, погодь, сделаю лучше..");
-                return;
-            }
+
+            GetJson.SaveJson("resultModel.json", resultModel);
+            GetJson.SaveJson("json2.json", json);
+            
         }
 
         private static Task Error(ITelegramBotClient arg1, Exception arg2, CancellationToken arg3)
