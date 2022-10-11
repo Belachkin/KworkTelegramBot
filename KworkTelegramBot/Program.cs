@@ -24,8 +24,10 @@ namespace KworkTelegramBot
         static  void Main(string[] args)
         {
             GetLogo();
-            
-            json = KworkParsing.GetKworkProjectsJson("https://kwork.ru/projects");            
+            Write("url: ");
+            url = ReadLine();
+
+            json = KworkParsing.GetKworkProjectsJson(url);            
             Json.SaveJson("last_projects.json", json);
 
             timer.Elapsed += Timer_Elapsed2;
