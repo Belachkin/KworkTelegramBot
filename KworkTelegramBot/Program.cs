@@ -84,13 +84,13 @@ namespace KworkTelegramBot
                         ));
                 }
 
-                foreach (var model1 in json.data.wants)
+                foreach (var lastModel in json.data.wants)
                 {
-                    foreach (var model2 in resultModel)
+                    foreach (var firstModel in resultModel)
                     {
-                        if (model1.id == model2.IdProject)
+                        if (lastModel.id == firstModel.IdProject)
                         {
-                            model2.isMatch = true;
+                            firstModel.isMatch = true;
                         }
                     }
                 }
