@@ -19,7 +19,7 @@ namespace KworkTelegramBot
         public static JsonTokenModel token;
         public static Timer timer;
         public static KworkJsonModel json;
-        public static List<DbModel> resultModel;
+        public static List<WantsModel> resultModel;
         public static string url;
         static  void Main(string[] args)
         {
@@ -68,11 +68,11 @@ namespace KworkTelegramBot
                 json = KworkParsing.GetKworkProjectsJson(url);
                 var json2 = Json.GetJsonModel("last_projects.json");
 
-                resultModel = new List<DbModel>();
+                resultModel = new List<WantsModel>();
 
                 foreach (var model in json2.data.wants)
                 {
-                    resultModel.Add(new DbModel(
+                    resultModel.Add(new WantsModel(
                         model.id,
                         model.name,
                         model.description,

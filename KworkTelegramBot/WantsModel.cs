@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace KworkTelegramBot
 {
-    public class DbModel
+    public class WantsModel
     {
-        public DbModel
+        public WantsModel
             (
             int _idPoject,
             string _name,
@@ -31,7 +31,7 @@ namespace KworkTelegramBot
             kworkCount = _kworkCount;
             isMatch = _isMatch;
         }
-        public DbModel
+        public WantsModel
             (
             int _idPoject,
             string _name,
@@ -54,7 +54,7 @@ namespace KworkTelegramBot
             kworkCount = _kworkCount;
             
         }
-        public DbModel()
+        public WantsModel()
         {
 
         }
