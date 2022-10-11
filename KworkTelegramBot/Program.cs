@@ -23,78 +23,92 @@ namespace KworkTelegramBot
         public static string url;
         static  void Main(string[] args)
         {
-            GetLogo();
-            Write("url: ");
-            url = ReadLine();
+            try
+            {
+                GetLogo();
+                WriteColor("url: ", ConsoleColor.Blue);
+                url = ReadLine();
 
-            json = KworkParsing.GetKworkProjectsJson(url);            
-            Json.SaveJson("last_projects.json", json);
+                json = KworkParsing.GetKworkProjectsJson(url);
+                Json.SaveJson("last_projects.json", json);
 
-            timer.Elapsed += Timer_Elapsed2;
-            timer.Enabled = true;
-            timer.AutoReset = true;
-            timer.Start();
+                timer.Elapsed += Timer_Elapsed2;
+                timer.Enabled = true;
+                timer.AutoReset = true;
+                timer.Start();
 
-            WriteLine("Таймер запущен");
+                WriteLineColor("Таймер запущен", ConsoleColor.Green);
 
-            ReadLine();
+                ReadLine();
+            }
+            catch(Exception ex)
+            {
+                WriteLineColor(ex.Message, ConsoleColor.Red);
+            }
+            
         }
 
         private static async void Timer_Elapsed2(object? sender, ElapsedEventArgs e)
         {
-            DateTime now = DateTime.Now;           
-            WriteLine($"Ивент сработал | T: {now:T}");
-
-
-            token = Json.GetToken();
-            whiteList = Json.GetWhiteList();
-
-            var client = new TelegramBotClient(token.token.ToString());
-
-            json = KworkParsing.GetKworkProjectsJson(url);
-            var json2 = Json.GetJsonModel("last_projects.json");
-
-            resultModel = new List<DbModel>();
-
-            foreach(var model in json2.data.wants)
+            try
             {
-                resultModel.Add(new DbModel(
-                    model.id,
-                    model.name,
-                    model.description,
-                    model.url,
-                    model.priceLimit,
-                    model.possiblePriceLimit,
-                    model.timeLeft,
-                    model.kworkCount                          
-                    ));
-            }
+                DateTime now = DateTime.Now;
+                WriteLine($"Ивент сработал | T: {now:T}");
 
-            foreach (var model1 in json.data.wants)
-            {
-                foreach (var model2 in resultModel)
+                token = Json.GetToken();
+                whiteList = Json.GetWhiteList();
+
+                var client = new TelegramBotClient(token.token.ToString());
+
+                json = KworkParsing.GetKworkProjectsJson(url);
+                var json2 = Json.GetJsonModel("last_projects.json");
+
+                resultModel = new List<DbModel>();
+
+                foreach (var model in json2.data.wants)
                 {
-                    if(model1.id == model2.IdProject)
+                    resultModel.Add(new DbModel(
+                        model.id,
+                        model.name,
+                        model.description,
+                        model.url,
+                        model.priceLimit,
+                        model.possiblePriceLimit,
+                        model.timeLeft,
+                        model.kworkCount
+                        ));
+                }
+
+                foreach (var model1 in json.data.wants)
+                {
+                    foreach (var model2 in resultModel)
                     {
-                        model2.isMatch = true;
+                        if (model1.id == model2.IdProject)
+                        {
+                            model2.isMatch = true;
+                        }
                     }
                 }
-            }
 
-            foreach(var model in resultModel)
-            {
-                if(model.isMatch != true)
+                foreach (var model in resultModel)
                 {
-                    WriteLine($"Бот отправил новый пост: id {model.IdProject} | {model.Name}");
-                    await client.SendTextMessageAsync(whiteList.chatId[0],
-                        $"*{model.Name}* \n Желаемый бюджет: до  *{model.priceLimit}₽* \nДопустимый: до *{model.possiblePrice}₽* \nhttps://kwork.ru/{model.Url}/view\n{model.Description}"
-                        , parseMode: ParseMode.Markdown
-                        );
-                }        
-            }
+                    if (model.isMatch != true)
+                    {
+                        WriteLine($"Бот отправил новый пост: id {model.IdProject} | {model.Name}");
+                        await client.SendTextMessageAsync(whiteList.chatId[0],
+                            $"*{model.Name}* \n Желаемый бюджет: до  *{model.priceLimit}₽* \nДопустимый: до *{model.possiblePrice}₽* \nhttps://kwork.ru/{model.Url}/view\n{model.Description}"
+                            , parseMode: ParseMode.Markdown
+                            );
+                    }
+                }
 
-            Json.SaveJson("resultModel.json", resultModel);
-            Json.SaveJson("last_projects.json", json);            
+                Json.SaveJson("resultModel.json", resultModel);
+                Json.SaveJson("last_projects.json", json);
+            }
+            catch (Exception ex)
+            {
+                WriteLineColor(ex.Message, ConsoleColor.Red);
+            }               
         }
 
         private static Task Error(ITelegramBotClient arg1, Exception arg2, CancellationToken arg3)
