@@ -8,6 +8,7 @@ using Timer = System.Timers.Timer;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
 using Telegram.Bot.Types.Enums;
+using static KworkTelegramBot.ColorConsole;
 
 namespace KworkTelegramBot 
 {
@@ -47,8 +48,8 @@ namespace KworkTelegramBot
 
             var client = new TelegramBotClient(token.token.ToString());
 
-            json = KworkParsing.GetKworkProjectsJson("https://kwork.ru/projects");
-            var json2 = Json.GetJsonModel("last_projects.json.json");
+            json = KworkParsing.GetKworkProjectsJson(url);
+            var json2 = Json.GetJsonModel("last_projects.json");
 
             resultModel = new List<DbModel>();
 
