@@ -17,7 +17,7 @@ namespace KworkTelegramBot
     {
         public static JsonWhiteListModel whiteList;
         public static JsonTokenModel token;
-        public static Timer timer = new Timer((1000 * 60) * 15);
+        public static Timer timer;
         public static KworkJsonModel json;
         public static List<DbModel> resultModel;
         public static string url;
@@ -26,6 +26,9 @@ namespace KworkTelegramBot
             try
             {
                 GetLogo();
+                WriteColor("Таймер в минутах: ", ConsoleColor.Blue);
+                int min = Convert.ToInt32(ReadLine());
+                timer = new Timer((1000 * 60) * min);
                 WriteColor("url: ", ConsoleColor.Blue);
                 url = ReadLine();
 
