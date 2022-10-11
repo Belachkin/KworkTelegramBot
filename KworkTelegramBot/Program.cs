@@ -26,16 +26,18 @@ namespace KworkTelegramBot
             try
             {
                 GetLogo();
+
                 WriteColor("Таймер в минутах: ", ConsoleColor.Blue);
                 int min = Convert.ToInt32(ReadLine());
                 timer = new Timer((1000 * 60) * min);
+
                 WriteColor("url: ", ConsoleColor.Blue);
                 url = ReadLine();
 
                 json = KworkParsing.GetKworkProjectsJson(url);
                 Json.SaveJson("last_projects.json", json);
 
-                timer.Elapsed += Timer_Elapsed2;
+                timer.Elapsed += Timer_Elapsed;
                 timer.Enabled = true;
                 timer.AutoReset = true;
                 timer.Start();
@@ -51,7 +53,7 @@ namespace KworkTelegramBot
             
         }
 
-        private static async void Timer_Elapsed2(object? sender, ElapsedEventArgs e)
+        private static async void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             try
             {
