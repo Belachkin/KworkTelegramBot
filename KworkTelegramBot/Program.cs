@@ -11,7 +11,6 @@ using Telegram.Bot.Types.Enums;
 using static KworkTelegramBot.ColorConsole;
 using static System.Console;
 
-
 namespace KworkTelegramBot 
 {
     class Program
@@ -24,7 +23,7 @@ namespace KworkTelegramBot
         public static string url;
         static  void Main(string[] args)
         {
-
+            GetLogo();
             
             json = KworkParsing.GetKworkProjectsJson("https://kwork.ru/projects");            
             Json.SaveJson("last_projects.json", json);
@@ -99,6 +98,14 @@ namespace KworkTelegramBot
         private static Task Error(ITelegramBotClient arg1, Exception arg2, CancellationToken arg3)
         {
             throw new NotImplementedException();
+        }
+
+        private static void GetLogo()
+        {
+            WriteLineColor("█░█ █░░░█ ▄▀▀▄ █▀▄ █░█ . ▀█▀ █▀▀ █░░ █▀▀ ▄▀▀ █▀▄ ▄▀▄ ██▄██ . █▀▄ ▄▀▀▄ ▀█▀", ConsoleColor.Yellow);
+            WriteLineColor("█▀▄ █▄█▄█ █░░█ █▀▄ █▀▄ . ░█░ █▀▀ █░░ █▀▀ █░█ █▀▄ █▄█ █░▀░█ . █▀▄ █░░█ ░█░", ConsoleColor.Yellow);
+            WriteLineColor("▀░▀ ▀▀░▀▀ ░▀▀░ ▀░▀ ▀░▀ . ░▀░ ▀▀▀ ▀▀▀ ▀▀▀ ░▀▀ ▀░▀ ▀░▀ ▀░░░▀ . ▀▀░ ░▀▀░ ░▀░\n\n\n", ConsoleColor.Yellow);
+
         }
     }
 }
