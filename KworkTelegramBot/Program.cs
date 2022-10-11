@@ -9,6 +9,8 @@ using Newtonsoft.Json.Linq;
 using System.Reflection;
 using Telegram.Bot.Types.Enums;
 using static KworkTelegramBot.ColorConsole;
+using static System.Console;
+
 
 namespace KworkTelegramBot 
 {
@@ -32,15 +34,15 @@ namespace KworkTelegramBot
             timer.AutoReset = true;
             timer.Start();
 
-            Console.WriteLine("Таймер запущен");
+            WriteLine("Таймер запущен");
 
-            Console.ReadLine();
+            ReadLine();
         }
 
         private static async void Timer_Elapsed2(object? sender, ElapsedEventArgs e)
         {
             DateTime now = DateTime.Now;           
-            Console.WriteLine($"Ивент сработал | T: {now:T}");
+            WriteLine($"Ивент сработал | T: {now:T}");
 
 
             token = Json.GetToken();
@@ -82,7 +84,7 @@ namespace KworkTelegramBot
             {
                 if(model.isMatch != true)
                 {
-                    Console.WriteLine($"Бот отправил новый пост: id {model.IdProject} | {model.Name}");
+                    WriteLine($"Бот отправил новый пост: id {model.IdProject} | {model.Name}");
                     await client.SendTextMessageAsync(whiteList.chatId[0],
                         $"*{model.Name}* \n Желаемый бюджет: до  *{model.priceLimit}₽* \nДопустимый: до *{model.possiblePrice}₽* \nhttps://kwork.ru/{model.Url}/view\n{model.Description}"
                         , parseMode: ParseMode.Markdown
