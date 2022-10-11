@@ -7,6 +7,7 @@ using System.Timers;
 using Timer = System.Timers.Timer;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
+using Telegram.Bot.Types.Enums;
 
 namespace KworkTelegramBot 
 {
@@ -17,13 +18,13 @@ namespace KworkTelegramBot
         public static Timer timer = new Timer((1000 * 60) * 15);
         public static KworkJsonModel json;
         public static List<DbModel> resultModel;
-        
-        static void Main(string[] args)
+        public static string url;
+        static  void Main(string[] args)
         {
-                        
-            json = KworkParsing.GetKworkProjectsJson("https://kwork.ru/projects");
-            GetJson.SaveJson("json1.json", json);
-            GetJson.SaveJson("json2.json", json);
+
+            
+            json = KworkParsing.GetKworkProjectsJson("https://kwork.ru/projects");            
+            Json.SaveJson("last_projects.json", json);
 
             timer.Elapsed += Timer_Elapsed2;
             timer.Enabled = true;
@@ -41,13 +42,13 @@ namespace KworkTelegramBot
             Console.WriteLine($"Ивент сработал | T: {now:T}");
 
 
-            token = GetJson.GetToken();
-            whiteList = GetJson.GetWhiteList();
+            token = Json.GetToken();
+            whiteList = Json.GetWhiteList();
 
             var client = new TelegramBotClient(token.token.ToString());
 
             json = KworkParsing.GetKworkProjectsJson("https://kwork.ru/projects");
-            var json2 = GetJson.GetJsonModel("json2.json");
+            var json2 = Json.GetJsonModel("last_projects.json.json");
 
             resultModel = new List<DbModel>();
 
@@ -82,14 +83,14 @@ namespace KworkTelegramBot
                 {
                     Console.WriteLine($"Бот отправил новый пост: id {model.IdProject} | {model.Name}");
                     await client.SendTextMessageAsync(whiteList.chatId[0],
-                        $"**{model.Name}**\n{model.Description}\n https://kwork.ru/{model.Url}/view \nЖелаемый бюджет: до **{model.priceLimit}₽**\nДопустимый: до **{model.possiblePrice}₽**"
+                        $"*{model.Name}* \n Желаемый бюджет: до  *{model.priceLimit}₽* \nДопустимый: до *{model.possiblePrice}₽* \nhttps://kwork.ru/{model.Url}/view\n{model.Description}"
+                        , parseMode: ParseMode.Markdown
                         );
                 }        
             }
 
-            GetJson.SaveJson("resultModel.json", resultModel);
-            GetJson.SaveJson("json2.json", json);
-            
+            Json.SaveJson("resultModel.json", resultModel);
+            Json.SaveJson("last_projects.json", json);            
         }
 
         private static Task Error(ITelegramBotClient arg1, Exception arg2, CancellationToken arg3)

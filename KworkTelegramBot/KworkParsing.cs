@@ -23,7 +23,7 @@ namespace KworkTelegramBot
                         {"Accept-Encoding", "gzip, deflate, br"},
                         {"Origin", "https://kwork.ru"},
                         {"Connection", "keep-alive"},
-                        {"Referer", "https://kwork.ru/projects"},
+                        {"Referer", url},
                         {"Cookie", "_kmid=67be4542c64049fee70dade8beb68934; _kmfvt=1665064604; site_version=desktop; RORSSQIHEK=245b72cb8ab193ee146c48cfa04b83a3; referrer_url=https%3A%2F%2Fkwork.ru%2Fprojects; isFacebookAvailable=false; _gcl_au=1.1.787892970.1665064606; _ym_uid=1665064607928676043; _ym_d=1665064607; yandex_client_id=1665064607928676043; _ga=GA1.2.145756961.1665064607; _gid=GA1.2.11868369.1665064607; _ubtcuid=cl8xjr4eg00002ad2t7oxz8r5; google_client_id=145756961.1665064607; _sp_id.b695=5f52adb8-34fb-41cf-b8cd-7a5fb4a434cc.1665064607.2.1665090469.1665071781.6d0399c5-d6a6-463b-a1bc-6f7bcdbe8229; _ym_isad=2; _sp_ses.b695=*"},
                         {"Sec-Fetch-Dest", "empty"},
                         {"Sec-Fetch-Mode", "cors"},

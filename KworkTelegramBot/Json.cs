@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KworkTelegramBot
 {
-    public class GetJson
+    public class Json
     {
 
         public static JsonTokenModel GetToken()
