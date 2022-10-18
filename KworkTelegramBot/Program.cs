@@ -124,6 +124,26 @@ namespace KworkTelegramBot
 
         private static async Task Update(ITelegramBotClient botClient, Update update, CancellationToken token)
         {
+            var message = update.Message;
+            ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
+            {
+                new KeyboardButton[] { "Дизайн 🖌", "Разработка и IT 👨‍💻", "Тексты и переводы 📝" },
+                new KeyboardButton[] {"SEO и трафик 📈", "Аудио, видео, съемка 🎵📸", "Бизнес и жизнь 💰" }
+            })
+            {
+                ResizeKeyboard = true
+            };
+
+            if(message.Text == "/start")
+            {
+                await botClient.SendTextMessageAsync(
+                chatId: message.Chat.Id,
+                text: "Привет, я *BelachkinCloudBot* 🤖 \n\nПомогу тебе быстро получать уведомления о новых проектах на бирже *kwork* \nВыбери категорию, и давай начнем",
+                replyMarkup: replyKeyboardMarkup,
+                parseMode: ParseMode.MarkdownV2
+                );
+            }
+
             
             
         }
