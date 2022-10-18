@@ -21,12 +21,13 @@ namespace KworkTelegramBot
         public static KworkJsonModel json;
         public static List<WantsModel> resultModel;
         public static string url;
-        static  void Main(string[] args)
+        static void Main(string[] args)
         {
             try
             {
+                
                 GetLogo();
-
+                token = Json.GetToken();
                 WriteColor("Таймер в минутах: ", ConsoleColor.Blue);
                 int min = Convert.ToInt32(ReadLine());
                 timer = new Timer((1000 * 60) * min);
@@ -44,6 +45,9 @@ namespace KworkTelegramBot
 
                 WriteLineColor("Таймер запущен", ConsoleColor.Green);
 
+                var client = new TelegramBotClient(token.token.ToString());
+                client.StartReceiving(Update, Error);
+
                 ReadLine();
             }
             catch(Exception ex)
@@ -53,6 +57,8 @@ namespace KworkTelegramBot
             
         }
 
+
+
         private static async void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             try
@@ -60,7 +66,7 @@ namespace KworkTelegramBot
                 DateTime now = DateTime.Now;
                 WriteLine($"Ивент сработал | T: {now:T}");
 
-                token = Json.GetToken();
+                
                 whiteList = Json.GetWhiteList();
 
                 var client = new TelegramBotClient(token.token.ToString());
@@ -116,16 +122,22 @@ namespace KworkTelegramBot
             }               
         }
 
-        private static Task Error(ITelegramBotClient arg1, Exception arg2, CancellationToken arg3)
+        private static async Task Update(ITelegramBotClient botClient, Update update, CancellationToken token)
         {
-            throw new NotImplementedException();
+            
+            
+        }
+
+        private static async Task Error(ITelegramBotClient arg1, Exception arg2, CancellationToken arg3)
+        {
+            WriteLineColor($"Error: {arg2.Message}\n{arg2.InnerException}\n{arg2.Source}\n{arg2.HelpLink}", ConsoleColor.Red);
         }
 
         private static void GetLogo()
         {
-            WriteLineColor("█░█ █░░░█ ▄▀▀▄ █▀▄ █░█ . ▀█▀ █▀▀ █░░ █▀▀ ▄▀▀ █▀▄ ▄▀▄ ██▄██ . █▀▄ ▄▀▀▄ ▀█▀", ConsoleColor.Yellow);
-            WriteLineColor("█▀▄ █▄█▄█ █░░█ █▀▄ █▀▄ . ░█░ █▀▀ █░░ █▀▀ █░█ █▀▄ █▄█ █░▀░█ . █▀▄ █░░█ ░█░", ConsoleColor.Yellow);
-            WriteLineColor("▀░▀ ▀▀░▀▀ ░▀▀░ ▀░▀ ▀░▀ . ░▀░ ▀▀▀ ▀▀▀ ▀▀▀ ░▀▀ ▀░▀ ▀░▀ ▀░░░▀ . ▀▀░ ░▀▀░ ░▀░\n\n\n", ConsoleColor.Yellow);
+            WriteLineColor("█░█ █░░░█ ▄▀▀▄ █▀▄ █░█ . ▀█▀ █▀▀ █░░ █▀▀ ▄▀▀ █▀▄ ▄▀▄ ██▄██ . █▀▄ ▄▀▀▄ ▀█▀", ConsoleColor.Blue);
+            WriteLineColor("█▀▄ █▄█▄█ █░░█ █▀▄ █▀▄ . ░█░ █▀▀ █░░ █▀▀ █░█ █▀▄ █▄█ █░▀░█ . █▀▄ █░░█ ░█░", ConsoleColor.Blue);
+            WriteLineColor("▀░▀ ▀▀░▀▀ ░▀▀░ ▀░▀ ▀░▀ . ░▀░ ▀▀▀ ▀▀▀ ▀▀▀ ░▀▀ ▀░▀ ▀░▀ ▀░░░▀ . ▀▀░ ░▀▀░ ░▀░\n\n\n", ConsoleColor.Blue);
 
         }
     }
