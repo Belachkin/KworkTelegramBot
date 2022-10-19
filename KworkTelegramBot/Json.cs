@@ -62,7 +62,7 @@ namespace KworkTelegramBot
         
         public class User
         {
-            public int chatId { get; set; }
+            public long chatId { get; set; }
             public bool category_disign { get; set; }
             public bool category_it { get; set; }
             public bool category_text { get; set; }

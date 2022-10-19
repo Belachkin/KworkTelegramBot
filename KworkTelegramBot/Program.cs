@@ -21,6 +21,7 @@ namespace KworkTelegramBot
         public static KworkJsonModel json;
         public static List<WantsModel> resultModel;
         public static string url;
+        public static UserConfigModel userConfig;
         static void Main(string[] args)
         {
             try
@@ -34,6 +35,8 @@ namespace KworkTelegramBot
 
                 WriteColor("url: ", ConsoleColor.Blue);
                 url = ReadLine();
+
+                userConfig = Json.GetUserConfig("config/user_config.json");
 
                 json = KworkParsing.GetKworkProjectsJson(url);
                 Json.SaveJson("last_projects.json", json);
@@ -143,11 +146,24 @@ namespace KworkTelegramBot
                 replyMarkup: replyKeyboardMarkup,
                 parseMode: ParseMode.MarkdownV2
                 );
+
+                if (!userConfig.users.Any(x => x.chatId == message.Chat.Id))
+                {
+                    await botClient.SendTextMessageAsync(message.Chat.Id, "Не найдено совпадение в списке пользователей!");
+                }
+                else
+                {
+                    await botClient.SendTextMessageAsync(message.Chat.Id, "Найдено совпадение в списке пользователей!");
+                }
+
+                
+
+
+                //UserConfigModel.User newUser = new UserConfigModel.User();
+                //newUser.chatId = message.Chat.Id;
             }
 
-
-            
-            
+                               
         }
 
         private static async Task Error(ITelegramBotClient arg1, Exception arg2, CancellationToken arg3)
