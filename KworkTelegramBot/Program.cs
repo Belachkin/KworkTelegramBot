@@ -127,9 +127,9 @@ namespace KworkTelegramBot
             var message = update.Message;
             ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
             {
-                new KeyboardButton[] { "Дизайн 🖌", "Разработка и IT 👨‍💻", "Тексты и переводы 📝" },
-                new KeyboardButton[] {"SEO и трафик 📈", "Аудио, видео, съемка 🎵📸", "Бизнес и жизнь 💰" },
-                new KeyboardButton[] { "Сохранить и начать 💾" }
+                new KeyboardButton[] { Config.MarkupButton.Design, Config.MarkupButton.IT, Config.MarkupButton.Text },
+                new KeyboardButton[] { Config.MarkupButton.SEO, Config.MarkupButton.AudioVideo, Config.MarkupButton.Business },
+                new KeyboardButton[] { Config.MarkupButton.Save }
             })
             {
                 ResizeKeyboard = true
