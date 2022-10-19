@@ -128,7 +128,8 @@ namespace KworkTelegramBot
             ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
             {
                 new KeyboardButton[] { "Дизайн 🖌", "Разработка и IT 👨‍💻", "Тексты и переводы 📝" },
-                new KeyboardButton[] {"SEO и трафик 📈", "Аудио, видео, съемка 🎵📸", "Бизнес и жизнь 💰" }
+                new KeyboardButton[] {"SEO и трафик 📈", "Аудио, видео, съемка 🎵📸", "Бизнес и жизнь 💰" },
+                new KeyboardButton[] { "Сохранить и начать 💾" }
             })
             {
                 ResizeKeyboard = true
