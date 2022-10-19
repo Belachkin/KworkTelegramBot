@@ -36,6 +36,13 @@ namespace KworkTelegramBot
             KworkJsonModel jsonModel = JsonConvert.DeserializeObject<KworkJsonModel>(json);
             return jsonModel;
         }
+
+        public static UserConfigModel GetUserConfig(string path)
+        {
+            string json = System.IO.File.ReadAllText(path);
+            UserConfigModel jsonModel = JsonConvert.DeserializeObject<UserConfigModel>(json);
+            return jsonModel;
+        }
     }
 
     public class JsonTokenModel
@@ -47,6 +54,23 @@ namespace KworkTelegramBot
     public class JsonWhiteListModel
     {
         public int[] chatId { get; set; }
+    }
+
+    public class UserConfigModel
+    {
+        public User[] users { get; set; }
+        
+        public class User
+        {
+            public int chatId { get; set; }
+            public bool category_disign { get; set; }
+            public bool category_it { get; set; }
+            public bool category_text { get; set; }
+            public bool category_seo { get; set; }
+            public bool category_audion_video { get; set; }
+            public bool category_business { get; set; }
+        }
+
     }
 
 
