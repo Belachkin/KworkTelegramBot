@@ -18,5 +18,17 @@ namespace KworkTelegramBot
             public const string BusinessUrl = "https://kwork.ru/projects?c=83";
 //TODO: Add AdsUrl
         }
+
+        public class MarkupButton
+        {
+            public const string Design = "Дизайн 🖌";
+            public const string IT = "Разработка и IT 👨‍💻";
+            public const string SEO = "SEO и трафик 📈";
+            public const string Text = "Тексты и переводы 📝";
+            public const string AudioVideo = "Аудио, видео, съемка 🎵📸";
+            public const string Business = "Бизнес и жизнь 💰";
+
+            public const string Save = "Сохранить и начать 💾";
+        }
     }
 }
