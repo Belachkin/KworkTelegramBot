@@ -148,8 +148,9 @@ namespace KworkTelegramBot
                 );
 
                 if (!userConfig.users.Any(x => x.chatId == message.Chat.Id))
-                {
-                    await botClient.SendTextMessageAsync(message.Chat.Id, "Не найдено совпадение в списке пользователей!");
+                {                   
+                    UserConfigModel.User newUser = new UserConfigModel.User();
+                    newUser.chatId = message.Chat.Id;
                 }
                 else
                 {
