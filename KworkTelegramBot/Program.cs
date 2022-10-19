@@ -148,9 +148,8 @@ namespace KworkTelegramBot
                 );
 
                 if (!userConfig.users.Any(x => x.chatId == message.Chat.Id))
-                {                   
-                    UserConfigModel.User newUser = new UserConfigModel.User();
-                    newUser.chatId = message.Chat.Id;
+                {
+                    UserConfigModel.User newUser = new UserConfigModel.User(chatId: message.Chat.Id);                    
                 }
                 else
                 {

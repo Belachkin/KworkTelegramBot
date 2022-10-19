@@ -62,6 +62,29 @@ namespace KworkTelegramBot
         
         public class User
         {
+            public User() { }
+            public User(long chatId, bool category_disign, bool category_it, bool category_text, bool category_seo, bool category_audion_video, bool category_business)
+            {
+                this.chatId = chatId;
+                this.category_disign = category_disign;
+                this.category_it = category_it;
+                this.category_text = category_text;
+                this.category_seo = category_seo;
+                this.category_audion_video = category_audion_video;
+                this.category_business = category_business;
+            }
+
+            public User(long chatId)
+            {
+                this.chatId = chatId;
+                this.category_disign = false;
+                this.category_it = false;
+                this.category_text = false;
+                this.category_seo = false;
+                this.category_audion_video = false;
+                this.category_business = false;
+            }
+
             public long chatId { get; set; }
             public bool category_disign { get; set; }
             public bool category_it { get; set; }
