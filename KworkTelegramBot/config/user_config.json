@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "chatId": 123,
+      "category_disign": true,
+      "category_it" : true,
+      "category_text": true,
+      "category_seo" : true,
+      "category_audion_video" : true,
+      "category_business" : true
+    }
+  ]
+}
