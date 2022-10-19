@@ -10,12 +10,13 @@ namespace KworkTelegramBot
     {
         public class Category
         {
-            public const string DesignUrl = "";
-            public const string ItUrl = "";
-            public const string SeoUrl = "";
-            public const string TextUrl = "";
-            public const string AudioVideoUrl = "";
-            public const string BusinessUrl = "";
+            public const string DesignUrl = "https://kwork.ru/projects?c=15";
+            public const string ItUrl = "https://kwork.ru/projects?c=11";
+            public const string SeoUrl = "https://kwork.ru/projects?c=17";
+            public const string TextUrl = "https://kwork.ru/projects?c=5";
+            public const string AudioVideoUrl = "https://kwork.ru/projects?c=7";
+            public const string BusinessUrl = "https://kwork.ru/projects?c=83";
+//TODO: Add AdsUrl
         }
     }
 }
